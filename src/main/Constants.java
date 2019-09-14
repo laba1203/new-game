@@ -1,10 +1,10 @@
 package main;
 
 public class Constants {
-    public static int WIDTH = 800; //ширина
-    public static int HEIGHT = 600; //высота
-    public static String NAME = "SPACE BATTLE";
+    public static int BF_WIDTH = 800; //ширина
+    public static int BF_HEIGHT = 600; //высота
+    public static String BF_NAME = "SPACE BATTLE";
 
-    public enum Direction{ LEFT, RIGHT, NONE };
+    public enum Direction{ LEFT, RIGHT, UP, DOWN, NONE };
 
 }

@@ -3,14 +3,13 @@ package game;
 import elements.Spaceship;
 import main.Constants;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
 
-import static main.Constants.Direction.LEFT;
-import static main.Constants.Direction.NONE;
-import static main.Constants.Direction.RIGHT;
+import static main.Constants.Direction.*;
 
 public class Game extends Canvas implements Runnable{
 
@@ -41,10 +40,6 @@ public class Game extends Canvas implements Runnable{
                 e.printStackTrace();
             }
         }
-    }
-
-    private void update(long delta){
-
     }
 
     private void init(){
@@ -83,24 +78,36 @@ public class Game extends Canvas implements Runnable{
 
         @Override
         public void keyPressed(KeyEvent e) {
-            if(e.getKeyCode() == KeyEvent.VK_LEFT){
-                direction = LEFT;
-            }
-            if(e.getKeyCode() == KeyEvent.VK_RIGHT){
-                direction = RIGHT;
-            }
-        }
-
-        @Override
-        public void keyReleased(KeyEvent e){
-            if(e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_RIGHT){
-                direction = NONE;
+            switch (e.getKeyCode()){
+                default:
+                    System.out.println("Unknown key event.");
+                    break;
+                case KeyEvent.VK_LEFT:
+                    direction = LEFT;
+                    break;
+                case KeyEvent.VK_RIGHT:
+                    direction = RIGHT;
+                    break;
+                case KeyEvent.VK_UP:
+                    direction = UP;
+                    break;
+                case KeyEvent.VK_DOWN:
+                    direction = DOWN;
+                    break;
             }
 //            if(e.getKeyCode() == KeyEvent.VK_LEFT){
 //                direction = LEFT;
 //            }
 //            if(e.getKeyCode() == KeyEvent.VK_RIGHT){
 //                direction = RIGHT;
+//            }
+
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e){
+//            if(e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_RIGHT){
+                direction = NONE;
 //            }
         }
 

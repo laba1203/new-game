@@ -8,11 +8,16 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
 
+import static main.Constants.BF_HEIGHT;
+import static main.Constants.BF_WIDTH;
+
 public class Spaceship {
 
+    private static final int WIDTH = 64;
+    private static final int HEIGHT = 64;
     private static final String SPACESHIP_IMG = "spaceship.png";
     private int x = 0;
-    private int y = 300;
+    private int y = 0;
     private Sprite sprite;
 
 
@@ -28,10 +33,28 @@ public class Spaceship {
                 //do nothing;
                 return;
             case LEFT:
+                if(x <= 0){
+                    return;
+                }
                 x--;
                 break;
             case RIGHT:
+                if(x > BF_WIDTH - WIDTH){
+                    return;
+                }
                 x++;
+                break;
+            case UP:
+                if(y <= 0){
+                    return;
+                }
+                y--;
+                break;
+            case DOWN:
+                if(y > BF_HEIGHT - HEIGHT){
+                    return;
+                }
+                y++;
                 break;
         }
     }
@@ -52,7 +75,9 @@ public class Spaceship {
     }
 
     public void draw(Graphics g){
-        sprite.draw(g, x, y);
+//        sprite.draw(g, x, y);
+        g.setColor(new Color(255, 0, 0));
+        g.fillRect(x, y, WIDTH, HEIGHT);
     }
 
 }
