@@ -15,8 +15,6 @@ import static main.Constants.Direction.RIGHT;
 public class Game extends Canvas implements Runnable{
 
     private boolean running;
-    private boolean leftPressed = false;
-    private boolean rightPressed = false;
 
     private Spaceship spaceship;
 
