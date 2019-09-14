@@ -88,6 +88,7 @@ public class Enemy extends AbstractElement implements Runnable, GUIElement{
     @Override
     public void destroy(){
         this.alive = false;
+        this.x = -100;
     }
 
     private void destroySpaceIfHit(){

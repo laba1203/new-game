@@ -4,6 +4,7 @@ import game.Game;
 import main.Constants;
 
 import java.awt.*;
+import java.util.ConcurrentModificationException;
 
 import static main.Constants.Direction.UP;
 
@@ -12,7 +13,7 @@ public class Bullet extends AbstractElement implements GUIElement, Runnable {
     private static final int HEIGHT = 5;
     private int x;
     private int y;
-    private boolean shoot = false;
+    private boolean shooting = false;
     private boolean destroyed = false;
 
     Bullet(Game game, int x, int y){
@@ -24,7 +25,7 @@ public class Bullet extends AbstractElement implements GUIElement, Runnable {
     @Override
     public void run() {
 
-        while (shoot){
+        while (shooting){
             flyUp();
             destroyIfHit();
             if(destroyed){
@@ -37,7 +38,7 @@ public class Bullet extends AbstractElement implements GUIElement, Runnable {
 
     private void flyUp(){
         if(getYCoord() < - HEIGHT){
-            this.shoot = false;
+            this.shooting = false;
         }
         y--;
     }
@@ -47,12 +48,13 @@ public class Bullet extends AbstractElement implements GUIElement, Runnable {
         if(direction != UP){
             System.out.println("Unknown direction for bullet: " + direction);
         }
-        this.shoot = true;
+        this.shooting = true;
         new Thread(this).start();
     }
 
     public void destroy(){
         this.destroyed = true;
+        x = -100;
         System.out.println("Bullet was destroyed.");
     }
 
@@ -65,16 +67,21 @@ public class Bullet extends AbstractElement implements GUIElement, Runnable {
     }
 
     private void destroyIfHit(){
-        for (GUIElement element : getGame().getGuiElements()) {
-            if(element instanceof Enemy) {
-                if (this.y < (element.getYCoord() + element.getHeight())
-                        && this.x >= element.getXCoord()
-                        && this.x <= element.getXCoord() + element.getWidth()
-                        ) {
-                    element.destroy();
-                    this.destroy();
+        try {
+            for (GUIElement element :
+                    getGame().getGuiElements()) {
+                if (element instanceof Enemy) {
+                    if (this.y < (element.getYCoord() + element.getHeight())
+                            && this.x >= element.getXCoord()
+                            && this.x <= element.getXCoord() + element.getWidth()
+                            ) {
+                        element.destroy();
+                        this.destroy();
+                    }
                 }
             }
+        }catch (ConcurrentModificationException e){
+            this.destroy();
         }
     }
 

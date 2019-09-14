@@ -10,6 +10,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.Random;
 
 import static main.Constants.BF_WIDTH;
@@ -35,7 +36,11 @@ public class Game extends Canvas implements Runnable{
             delta = System.currentTimeMillis() - lastTime;
             lastTime = System.currentTimeMillis();
             spaceship.move(direction);
-            render();
+            try {
+                render();
+            }catch (ConcurrentModificationException e){
+                render();
+            }
             running = !spaceship.destroyed();
         }
 
