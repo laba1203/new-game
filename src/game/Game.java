@@ -1,13 +1,14 @@
 package game;
 
+import elements.GUIElement;
 import elements.Spaceship;
 import main.Constants;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
+import java.util.ArrayList;
 
 import static main.Constants.Direction.*;
 
@@ -19,6 +20,7 @@ public class Game extends Canvas implements Runnable{
 
     private static Constants.Direction direction = NONE;
 
+    private static ArrayList<GUIElement> guiElements = new ArrayList<>();
 
 
 
@@ -43,12 +45,13 @@ public class Game extends Canvas implements Runnable{
     }
 
     private void init(){
-        spaceship = new Spaceship();
+        spaceship = new Spaceship(this);
+        guiElements.add(spaceship);
         addKeyListener(new KeyInputHandler());
 
     }
 
-    private void render() {
+    public void render() {
         BufferStrategy bs = getBufferStrategy();
         if(bs == null){
             createBufferStrategy(2);
@@ -61,7 +64,9 @@ public class Game extends Canvas implements Runnable{
         g.setColor(Color.black); //выбрать цвет
         g.fillRect(0, 0, getWidth(), getHeight()); //заполнить прямоугольник
 
-        spaceship.draw(g);
+        for (GUIElement item: guiElements){
+            item.draw(g);
+        }
 
         g.dispose();
         bs.show();
@@ -72,6 +77,9 @@ public class Game extends Canvas implements Runnable{
         new Thread(this).start();
     }
 
+    public static void addUiElement(GUIElement el){
+        guiElements.add(el);
+    }
 
 
     private class KeyInputHandler extends KeyAdapter {
@@ -94,21 +102,24 @@ public class Game extends Canvas implements Runnable{
                 case KeyEvent.VK_DOWN:
                     direction = DOWN;
                     break;
+                case KeyEvent.VK_SPACE:
+                    spaceship.shoot();
+                    break;
             }
-//            if(e.getKeyCode() == KeyEvent.VK_LEFT){
-//                direction = LEFT;
-//            }
-//            if(e.getKeyCode() == KeyEvent.VK_RIGHT){
-//                direction = RIGHT;
-//            }
-
+            render();
         }
 
         @Override
         public void keyReleased(KeyEvent e){
-//            if(e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_RIGHT){
+            if(e.getKeyCode() == KeyEvent.VK_LEFT
+                    || e.getKeyCode() == KeyEvent.VK_RIGHT
+                    || e.getKeyCode() == KeyEvent.VK_UP
+                    || e.getKeyCode() == KeyEvent.VK_DOWN
+                    || e.getKeyCode() == KeyEvent.VK_SPACE
+                    ) {
                 direction = NONE;
-//            }
+            }
+            render();
         }
 
 
