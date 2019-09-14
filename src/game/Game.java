@@ -46,6 +46,10 @@ public class Game extends Canvas implements Runnable{
         }
     }
 
+    public ArrayList<GUIElement> getGuiElements(){
+        return guiElements;
+    }
+
     private void init(){
         spaceship = new Spaceship(this);
         guiElements.add(spaceship);

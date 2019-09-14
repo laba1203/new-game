@@ -14,6 +14,7 @@ public class Bullet extends AbstractElement implements GUIElement, Runnable {
     private int x;
     private int y;
     private boolean shoot = false;
+    private boolean destroyed = false;
 
     Bullet(Game game, int x, int y){
         super(game);
@@ -24,8 +25,13 @@ public class Bullet extends AbstractElement implements GUIElement, Runnable {
 
     @Override
     public void run() {
+
         while (shoot){
             flyUp();
+            destroyIfHit();
+            if(destroyed){
+                break;
+            }
             sleep(5);
         }
 
@@ -54,8 +60,8 @@ public class Bullet extends AbstractElement implements GUIElement, Runnable {
     }
 
     public void destroy(){
+        this.destroyed = true;
         System.out.println("Bullet was destroyed.");
-        //TODO
     }
 
     @Override
@@ -66,6 +72,20 @@ public class Bullet extends AbstractElement implements GUIElement, Runnable {
         g.fillRect(x, y, WIDTH, HEIGHT);
     }
 
+    private void destroyIfHit(){
+        for (GUIElement element : getGame().getGuiElements()) {
+            if(element instanceof Enemy) {
+                if (this.y < (element.getYCoord() + element.getHeight())
+                        && this.x >= element.getXCoord()
+                        && this.x <= element.getXCoord() + element.getWidth()
+                        ) {
+                    element.destroy();
+                    this.destroy();
+                }
+            }
+        }
+    }
+
     @Override
     public int getXCoord() {
         return x;
@@ -74,6 +94,16 @@ public class Bullet extends AbstractElement implements GUIElement, Runnable {
     @Override
     public int getYCoord() {
         return y;
+    }
+
+    @Override
+    public int getHeight() {
+        return HEIGHT;
+    }
+
+    @Override
+    public int getWidth() {
+        return WIDTH;
     }
 
 

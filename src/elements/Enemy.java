@@ -18,12 +18,21 @@ public class Enemy extends AbstractElement implements Runnable, GUIElement{
 
     private boolean alive = false;
 
+
     public Enemy(Game game, int x, int y){
         super(game);
         this.x = x;
         this.y = y;
         sleep(1000);
         move(DOWN);
+    }
+
+    @Override
+    public void run() {
+        while (alive){
+            flyDown();
+            sleep(5);
+        }
     }
 
     @Override
@@ -67,15 +76,18 @@ public class Enemy extends AbstractElement implements Runnable, GUIElement{
     }
 
     @Override
-    public void run() {
-        while (alive){
-            flyDown();
-            sleep(5);
-        }
+    public int getHeight() {
+        return HEIGHT;
     }
 
-    public void destroy(){
+    @Override
+    public int getWidth() {
+        return WIDTH;
+    }
 
+    @Override
+    public void destroy(){
+        this.alive = false;
     }
 
 }

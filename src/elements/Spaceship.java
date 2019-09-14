@@ -17,7 +17,7 @@ public class Spaceship extends AbstractElement implements GUIElement{
     private int x = BF_WIDTH/2;
     private int y = BF_HEIGHT - WIDTH;
     private Sprite sprite;
-    private Graphics g;
+    private boolean destroyed = false;
 
 
     public Spaceship(Game game){
@@ -73,6 +73,22 @@ public class Spaceship extends AbstractElement implements GUIElement{
     @Override
     public int getYCoord(){
         return y;
+    }
+
+    @Override
+    public int getHeight() {
+        return HEIGHT;
+    }
+
+    @Override
+    public int getWidth() {
+        return WIDTH;
+    }
+
+    @Override
+    public void destroy() {
+        //TODO: COmplete
+        this.destroyed = true;
     }
 
     public void draw(Graphics g){

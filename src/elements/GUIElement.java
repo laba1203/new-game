@@ -16,6 +16,14 @@ public interface GUIElement {
 
     int getYCoord();
 
+    int getHeight();
+
+    int getWidth();
+
+    void destroy();
+
+
+
 
 
 
