@@ -89,15 +89,15 @@ public class Game extends Canvas implements Runnable{
 
     private void generateEnemies(){
         int y = -100;
-        long timeout = 3000;
-        for(int i = 0; i < 5; i++){
+        long timeout = 6000;
+        for(int i = 0; i < 6; i++){
             Random rand = new Random();
             int x = rand.nextInt(BF_WIDTH);
             addUiElement(new Enemy(this, x, y, timeout));
             if(timeout < 1000){
                 timeout = 4000;
             }
-            timeout = timeout - 500;
+            timeout = timeout - 1000;
         }
         System.out.println("Enemies were generated.");
     }

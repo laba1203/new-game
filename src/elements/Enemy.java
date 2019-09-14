@@ -37,7 +37,7 @@ public class Enemy extends AbstractElement implements Runnable, GUIElement{
         sleep(startDelay);
         while (alive){
             flyDown();
-            sleep(10);
+            sleep(15);
         }
     }
 
