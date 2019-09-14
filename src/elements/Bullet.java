@@ -17,6 +17,7 @@ public class Bullet extends AbstractElement implements GUIElement, Runnable {
 
     Bullet(Game game, int x, int y){
         super(game);
+//        setCoordinates(x, y);
         this.x = x;
         this.y = y;
     }
@@ -31,7 +32,7 @@ public class Bullet extends AbstractElement implements GUIElement, Runnable {
     }
 
     private void flyUp(){
-        if(y < - HEIGHT){
+        if(getYCoord() < - HEIGHT){
             this.shoot = false;
         }
         y--;
@@ -63,6 +64,16 @@ public class Bullet extends AbstractElement implements GUIElement, Runnable {
 //        sprite.draw(g, x, y);
         g.setColor(new Color(255, 0, 0));
         g.fillRect(x, y, WIDTH, HEIGHT);
+    }
+
+    @Override
+    public int getXCoord() {
+        return x;
+    }
+
+    @Override
+    public int getYCoord() {
+        return y;
     }
 
 

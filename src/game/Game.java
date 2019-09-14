@@ -11,7 +11,6 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
 
-import static main.Constants.BF_HEIGHT;
 import static main.Constants.BF_WIDTH;
 import static main.Constants.Direction.*;
 

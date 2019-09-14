@@ -12,6 +12,12 @@ public interface GUIElement {
 
     void draw(Graphics g);
 
+    int getXCoord();
+
+    int getYCoord();
+
+
+
 
 
 }

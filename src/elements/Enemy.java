@@ -57,6 +57,16 @@ public class Enemy extends AbstractElement implements Runnable, GUIElement{
     }
 
     @Override
+    public int getXCoord() {
+        return x;
+    }
+
+    @Override
+    public int getYCoord() {
+        return y;
+    }
+
+    @Override
     public void run() {
         while (alive){
             flyDown();

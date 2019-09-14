@@ -3,11 +3,7 @@ package elements;
 import game.Game;
 import main.Constants;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.net.URL;
 
 import static main.Constants.BF_HEIGHT;
 import static main.Constants.BF_WIDTH;
@@ -64,16 +60,18 @@ public class Spaceship extends AbstractElement implements GUIElement{
     }
 
     public void shoot(){
-        Bullet bullet = new Bullet(getGame(), getX() + WIDTH/2, getY());
+        Bullet bullet = new Bullet(getGame(), getXCoord() + WIDTH/2, getYCoord());
         Game.addUiElement(bullet);
         bullet.move(UP);
     }
 
-    public int getX(){
+    @Override
+    public int getXCoord(){
         return x;
     }
 
-    public int getY(){
+    @Override
+    public int getYCoord(){
         return y;
     }
 
