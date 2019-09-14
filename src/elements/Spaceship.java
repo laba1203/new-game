@@ -25,7 +25,15 @@ public class Spaceship extends AbstractElement implements GUIElement{
         sprite = getSprite(SPACESHIP_IMG);
     }
 
+    public boolean destroyed(){
+        return destroyed;
+    }
+
     public void move(Constants.Direction direction){
+        if(destroyed){
+            System.out.println("Your spaceship was destroyed.");
+            return;
+        }
         switch (direction){
             default:
                 return;
@@ -87,7 +95,7 @@ public class Spaceship extends AbstractElement implements GUIElement{
 
     @Override
     public void destroy() {
-        //TODO: COmplete
+        //TODO: Complete
         this.destroyed = true;
     }
 

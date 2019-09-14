@@ -9,8 +9,6 @@ import java.io.IOException;
 import java.net.URL;
 
 abstract class AbstractElement {
-//    private int x = 0;
-//    private int y = 0;
     private Sprite sprite;
     private static boolean gameRendering = false;
     private Game game;
@@ -18,11 +16,6 @@ abstract class AbstractElement {
     AbstractElement(Game game){
         this.game = game;
     }
-
-//    protected void setCoordinates(int x, int y){
-//        this.x = x;
-//        this.y = y;
-//    }
 
     protected Graphics getGraphics(){
         return game.getGraphics();
@@ -61,6 +54,7 @@ abstract class AbstractElement {
         }
     }
 
+    @Deprecated
     protected void render(){
         try {
             waitRenderingCompleted();
@@ -71,12 +65,5 @@ abstract class AbstractElement {
         }
     }
 
-//    public int getXCoord(){
-//        return this.x;
-//    }
-//
-//    public int getYCoord(){
-//        return this.y;
-//    }
 
 }

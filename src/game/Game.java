@@ -23,7 +23,6 @@ public class Game extends Canvas implements Runnable{
     private static ArrayList<GUIElement> guiElements = new ArrayList<>();
 
 
-
     @Override
     public void run() {
         long lastTime = System.currentTimeMillis();
@@ -37,16 +36,18 @@ public class Game extends Canvas implements Runnable{
             lastTime = System.currentTimeMillis();
             spaceship.move(direction);
             render();
-            try {
-                Thread.sleep(5);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            running = !spaceship.destroyed();
         }
+
+        System.out.println("<<<<-----  Game Over  ------>>>>>>");
     }
 
     public ArrayList<GUIElement> getGuiElements(){
         return guiElements;
+    }
+
+    public Spaceship getSpaceship(){
+        return spaceship;
     }
 
     private void init(){
@@ -127,7 +128,6 @@ public class Game extends Canvas implements Runnable{
                     spaceship.shoot();
                     break;
             }
-            render();
         }
 
         @Override

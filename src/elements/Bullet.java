@@ -4,7 +4,6 @@ import game.Game;
 import main.Constants;
 
 import java.awt.*;
-import java.util.ConcurrentModificationException;
 
 import static main.Constants.Direction.UP;
 
@@ -18,7 +17,6 @@ public class Bullet extends AbstractElement implements GUIElement, Runnable {
 
     Bullet(Game game, int x, int y){
         super(game);
-//        setCoordinates(x, y);
         this.x = x;
         this.y = y;
     }
@@ -32,7 +30,7 @@ public class Bullet extends AbstractElement implements GUIElement, Runnable {
             if(destroyed){
                 break;
             }
-            sleep(5);
+            sleep(3);
         }
 
     }
@@ -42,12 +40,6 @@ public class Bullet extends AbstractElement implements GUIElement, Runnable {
             this.shoot = false;
         }
         y--;
-//        try {
-//            render();
-//        }catch (ConcurrentModificationException e){
-//            e.printStackTrace();
-//            render();
-//        }
     }
 
     @Override

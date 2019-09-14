@@ -4,7 +4,6 @@ import game.Game;
 import main.Constants;
 
 import java.awt.*;
-import java.util.ConcurrentModificationException;
 
 import static main.Constants.BF_HEIGHT;
 import static main.Constants.Direction.DOWN;
@@ -37,7 +36,7 @@ public class Enemy extends AbstractElement implements Runnable, GUIElement{
         sleep(startDelay);
         while (alive){
             flyDown();
-            sleep(15);
+            sleep(20);
         }
     }
 
@@ -55,14 +54,7 @@ public class Enemy extends AbstractElement implements Runnable, GUIElement{
             this.alive = false;
         }
         y++;
-        if(y + HEIGHT > 0) {
-            try {
-                render();
-            } catch (ConcurrentModificationException e) {
-                e.printStackTrace();
-                render();
-            }
-        }
+        destroySpaceIfHit();
     }
 
     @Override
@@ -96,6 +88,17 @@ public class Enemy extends AbstractElement implements Runnable, GUIElement{
     @Override
     public void destroy(){
         this.alive = false;
+    }
+
+    private void destroySpaceIfHit(){
+        Spaceship spaceship = getGame().getSpaceship();
+        if(this.x >= spaceship.getXCoord()
+                && this.x <= spaceship.getXCoord() + spaceship.getWidth()
+                && this.y < spaceship.getYCoord() + spaceship.getHeight()
+                && this.y > spaceship.getYCoord()
+                ){
+            spaceship.destroy();
+        }
     }
 
 }
