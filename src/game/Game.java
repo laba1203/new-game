@@ -1,5 +1,6 @@
 package game;
 
+import elements.Enemy;
 import elements.GUIElement;
 import elements.Spaceship;
 import main.Constants;
@@ -10,6 +11,8 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
 
+import static main.Constants.BF_HEIGHT;
+import static main.Constants.BF_WIDTH;
 import static main.Constants.Direction.*;
 
 public class Game extends Canvas implements Runnable{
@@ -47,6 +50,7 @@ public class Game extends Canvas implements Runnable{
     private void init(){
         spaceship = new Spaceship(this);
         guiElements.add(spaceship);
+        guiElements.add(new Enemy(this, BF_WIDTH/2, 0));
         addKeyListener(new KeyInputHandler());
 
     }
