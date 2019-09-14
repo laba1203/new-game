@@ -15,23 +15,29 @@ public class Enemy extends AbstractElement implements Runnable, GUIElement{
     private static final int HEIGHT = 40;
     private int x;
     private int y;
+    private long startDelay = 0; //sleep before start
 
     private boolean alive = false;
 
 
     public Enemy(Game game, int x, int y){
+        this(game, x, y, 1000);
+    }
+
+    public Enemy(Game game, int x, int y, long timeout){
         super(game);
         this.x = x;
         this.y = y;
-        sleep(1000);
+        this.startDelay = timeout;
         move(DOWN);
     }
 
     @Override
     public void run() {
+        sleep(startDelay);
         while (alive){
             flyDown();
-            sleep(5);
+            sleep(10);
         }
     }
 
@@ -49,11 +55,13 @@ public class Enemy extends AbstractElement implements Runnable, GUIElement{
             this.alive = false;
         }
         y++;
-        try {
-            render();
-        }catch (ConcurrentModificationException e){
-            e.printStackTrace();
-            render();
+        if(y + HEIGHT > 0) {
+            try {
+                render();
+            } catch (ConcurrentModificationException e) {
+                e.printStackTrace();
+                render();
+            }
         }
     }
 

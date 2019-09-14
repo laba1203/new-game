@@ -10,6 +10,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
 import java.util.ArrayList;
+import java.util.Random;
 
 import static main.Constants.BF_WIDTH;
 import static main.Constants.Direction.*;
@@ -17,11 +18,8 @@ import static main.Constants.Direction.*;
 public class Game extends Canvas implements Runnable{
 
     private boolean running;
-
     private Spaceship spaceship;
-
     private static Constants.Direction direction = NONE;
-
     private static ArrayList<GUIElement> guiElements = new ArrayList<>();
 
 
@@ -32,6 +30,7 @@ public class Game extends Canvas implements Runnable{
         long delta;
 
         init();
+        generateEnemies();
 
         while(running) {
             delta = System.currentTimeMillis() - lastTime;
@@ -86,6 +85,21 @@ public class Game extends Canvas implements Runnable{
 
     public static void addUiElement(GUIElement el){
         guiElements.add(el);
+    }
+
+    private void generateEnemies(){
+        int y = -100;
+        long timeout = 3000;
+        for(int i = 0; i < 5; i++){
+            Random rand = new Random();
+            int x = rand.nextInt(BF_WIDTH);
+            addUiElement(new Enemy(this, x, y, timeout));
+            if(timeout < 1000){
+                timeout = 4000;
+            }
+            timeout = timeout - 500;
+        }
+        System.out.println("Enemies were generated.");
     }
 
 

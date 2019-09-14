@@ -42,12 +42,12 @@ public class Bullet extends AbstractElement implements GUIElement, Runnable {
             this.shoot = false;
         }
         y--;
-        try {
-            render();
-        }catch (ConcurrentModificationException e){
-            e.printStackTrace();
-            render();
-        }
+//        try {
+//            render();
+//        }catch (ConcurrentModificationException e){
+//            e.printStackTrace();
+//            render();
+//        }
     }
 
     @Override
