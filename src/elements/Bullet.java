@@ -59,6 +59,11 @@ public class Bullet extends AbstractElement implements GUIElement, Runnable {
     }
 
     @Override
+    public boolean destroyed() {
+        return destroyed;
+    }
+
+    @Override
     public void draw(Graphics g) {
 //        setGraphics(g);
 //        sprite.draw(g, x, y);

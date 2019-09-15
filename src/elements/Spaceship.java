@@ -65,6 +65,7 @@ public class Spaceship extends AbstractElement implements GUIElement{
                 y++;
                 break;
         }
+        sleep(3);
     }
 
     public void shoot(){

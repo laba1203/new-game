@@ -10,7 +10,7 @@ import static main.Constants.Direction.DOWN;
 
 public class Enemy extends AbstractElement implements Runnable, GUIElement{
 
-    private static final int WIDTH = 32;
+    public static final int WIDTH = 32;
     private static final int HEIGHT = 40;
     private int x;
     private int y;
@@ -89,6 +89,11 @@ public class Enemy extends AbstractElement implements Runnable, GUIElement{
     public void destroy(){
         this.alive = false;
         this.x = -100;
+    }
+
+    @Override
+    public boolean destroyed() {
+        return !alive;
     }
 
     private void destroySpaceIfHit(){

@@ -22,6 +22,8 @@ public interface GUIElement {
 
     void destroy();
 
+    boolean destroyed();
+
 
 
 

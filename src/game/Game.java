@@ -41,10 +41,28 @@ public class Game extends Canvas implements Runnable{
             }catch (ConcurrentModificationException e){
                 render();
             }
-            running = !spaceship.destroyed();
+            if(spaceship.destroyed()){
+                System.out.println("<<<<<======------     YOU LOSE  :-(     ------======>>>>>>>>");
+                running = false;
+            }
+            if(allEnemiesKilled()){
+                System.out.println("<<<<<======------     CONGRATULATIONS!!!! YOU WIN !!!!!      ------======>>>>>>>>");
+                running = false;
+            };
         }
 
         System.out.println("<<<<-----  Game Over  ------>>>>>>");
+    }
+
+    private boolean allEnemiesKilled(){
+        for(GUIElement element: getGuiElements())
+        if(element instanceof Enemy){
+            if(!element.destroyed()){
+                return false;
+            }
+        }
+        return true;
+
     }
 
     public ArrayList<GUIElement> getGuiElements(){
@@ -95,15 +113,22 @@ public class Game extends Canvas implements Runnable{
 
     private void generateEnemies(){
         int y = -100;
-        long timeout = 6000;
-        for(int i = 0; i < 6; i++){
+        long timeout = 2000;
+        for(int i = 0; i < 20; i++){
             Random rand = new Random();
-            int x = rand.nextInt(BF_WIDTH);
+            int x = rand.nextInt(BF_WIDTH - Enemy.WIDTH);
+            System.out.println("Add Enemy with timeout: " + timeout);
             addUiElement(new Enemy(this, x, y, timeout));
-            if(timeout < 1000){
-                timeout = 4000;
-            }
-            timeout = timeout - 1000;
+            timeout += (2000 + rand.nextInt(4000));
+//            Random rand = new Random();
+//            int x = rand.nextInt(BF_WIDTH - Enemy.WIDTH);
+//            System.out.println("Add Enemy with timeout: " + timeout);
+//            addUiElement(new Enemy(this, x, y, timeout));
+//            if(timeout < minTimeout){
+//                minTimeout = initialTimeout;
+//                timeout = initialTimeout;
+//            }
+//            timeout = timeout - 2000;
         }
         System.out.println("Enemies were generated.");
     }
