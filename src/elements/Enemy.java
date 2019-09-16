@@ -15,40 +15,58 @@ public class Enemy extends AbstractElement implements Runnable, GUIElement{
     private static final int HEIGHT = 40;
     private long startDelay = 0; //sleep before start
 
-    private boolean alive = false;
+    private boolean alive;
+    private boolean moveZigzag;
 
 
     public Enemy(Game game, int x, int y){
         this(game, x, y, 1000);
     }
 
-    public Enemy(Game game, int x, int y, long timeout){
+    public Enemy(Game game, int x, int y, long timeout, boolean moveZigzag){
         super(game);
         this.x = x;
         this.y = y;
         this.startDelay = timeout;
         this.alive = true;
+        this.moveZigzag = moveZigzag;
         new Thread(this).start();
+    }
+
+    public Enemy(Game game, int x, int y, long timeout){
+        this(game, x, y, timeout, false);
     }
 
     @Override
     public void run() {
         sleep(startDelay);
-        while (alive){
-            if(getYCoord() > BF_HEIGHT){
-                this.alive = false;
+        if(moveZigzag) {
+            moveZigzagWhileAlive();
+        }else {
+            while (alive){
+                if(getYCoord() > BF_HEIGHT){
+                    this.alive = false;
+                }
+                move(DOWN);
+                destroySpaceIfHit();
             }
-            move(DOWN);
-            //TODO
-//            if(getXCoord() <= BF_WIDTH - getXCoord() - 10){
-//                move(DIAGONAL_DOWN_RIGHT);
-//            }
-//            if(getXCoord() <= 10) {
-//                move(DIAGONAL_DOWN_LEFT);
-//            }
+        }
+    }
 
-
-            destroySpaceIfHit();
+    private void moveZigzagWhileAlive(){
+        Constants.Direction direction = DIAGONAL_DOWN_RIGHT;
+        while (alive){
+            move(direction);
+            if(direction == DIAGONAL_DOWN_RIGHT && (getXCoord() >= BF_WIDTH - getWidth())){
+                direction = DIAGONAL_DOWN_LEFT;
+                System.out.println("Direction changed to " + direction);
+                destroySpaceIfHit();
+            }
+            if(direction == DIAGONAL_DOWN_LEFT && (getXCoord() <= 0)){
+                direction = DIAGONAL_DOWN_RIGHT;
+                System.out.println("Direction changed to " + direction);
+                destroySpaceIfHit();
+            }
         }
     }
 
