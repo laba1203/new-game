@@ -5,6 +5,14 @@ public class Constants {
     public static int BF_HEIGHT = 800; //высота
     public static String BF_NAME = "SPACE BATTLE";
 
-    public enum Direction{ LEFT, RIGHT, UP, DOWN, NONE };
+    public enum Direction{
+        NONE,
+        LEFT,
+        RIGHT,
+        UP,
+        DOWN,
+        DIAGONAL_DOWN_RIGHT,
+        DIAGONAL_DOWN_LEFT
+    }
 
 }

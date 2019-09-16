@@ -14,6 +14,10 @@ public interface GUIElement {
 
     int getXCoord();
 
+    void setX(int x);
+
+    void setY(int y);
+
     int getYCoord();
 
     int getHeight();

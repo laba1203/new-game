@@ -14,74 +14,31 @@ public class Spaceship extends AbstractElement implements GUIElement{
     private static final int WIDTH = 64;
     private static final int HEIGHT = 64;
     private static final String SPACESHIP_IMG = "spaceship.png";
-    private int x = BF_WIDTH/2;
-    private int y = BF_HEIGHT - WIDTH;
     private Sprite sprite;
     private boolean destroyed = false;
 
 
     public Spaceship(Game game){
         super(game);
+        setX(BF_WIDTH/2);
+        setY(BF_HEIGHT - WIDTH);
         sprite = getSprite(SPACESHIP_IMG);
     }
 
+    @Override
     public boolean destroyed(){
         return destroyed;
     }
 
+    @Override
     public void move(Constants.Direction direction){
-        if(destroyed){
-            System.out.println("Your spaceship was destroyed.");
-            return;
-        }
-        switch (direction){
-            default:
-                return;
-            case NONE:
-                //do nothing;
-                return;
-            case LEFT:
-                if(x <= 0){
-                    return;
-                }
-                x--;
-                break;
-            case RIGHT:
-                if(x > BF_WIDTH - WIDTH){
-                    return;
-                }
-                x++;
-                break;
-            case UP:
-                if(y <= 0){
-                    return;
-                }
-                y--;
-                break;
-            case DOWN:
-                if(y > BF_HEIGHT - HEIGHT){
-                    return;
-                }
-                y++;
-                break;
-        }
-        sleep(3);
+        super.move(direction, 3);
     }
 
     public void shoot(){
-        Bullet bullet = new Bullet(getGame(), getXCoord() + WIDTH/2, getYCoord());
+        Bullet bullet = new Bullet(getGame(), getXCoord() + getWidth()/2, getYCoord());
         Game.addUiElement(bullet);
         bullet.move(UP);
-    }
-
-    @Override
-    public int getXCoord(){
-        return x;
-    }
-
-    @Override
-    public int getYCoord(){
-        return y;
     }
 
     @Override

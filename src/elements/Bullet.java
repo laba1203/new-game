@@ -11,8 +11,6 @@ import static main.Constants.Direction.UP;
 public class Bullet extends AbstractElement implements GUIElement, Runnable {
     private static final int WIDTH = 5;
     private static final int HEIGHT = 5;
-    private int x;
-    private int y;
     private boolean shooting = false;
     private boolean destroyed = false;
 
@@ -40,7 +38,7 @@ public class Bullet extends AbstractElement implements GUIElement, Runnable {
         if(getYCoord() < - HEIGHT){
             this.shooting = false;
         }
-        y--;
+        this.y--;
     }
 
     @Override
@@ -52,6 +50,7 @@ public class Bullet extends AbstractElement implements GUIElement, Runnable {
         new Thread(this).start();
     }
 
+    @Override
     public void destroy(){
         this.destroyed = true;
         x = -100;
@@ -68,7 +67,17 @@ public class Bullet extends AbstractElement implements GUIElement, Runnable {
 //        setGraphics(g);
 //        sprite.draw(g, x, y);
         g.setColor(new Color(255, 0, 0));
-        g.fillRect(x, y, WIDTH, HEIGHT);
+        g.fillRect(getXCoord(), getYCoord(), WIDTH, HEIGHT);
+    }
+
+    @Override
+    public int getHeight() {
+        return HEIGHT;
+    }
+
+    @Override
+    public int getWidth() {
+        return WIDTH;
     }
 
     private void destroyIfHit(){
@@ -88,26 +97,6 @@ public class Bullet extends AbstractElement implements GUIElement, Runnable {
         }catch (ConcurrentModificationException e){
             this.destroy();
         }
-    }
-
-    @Override
-    public int getXCoord() {
-        return x;
-    }
-
-    @Override
-    public int getYCoord() {
-        return y;
-    }
-
-    @Override
-    public int getHeight() {
-        return HEIGHT;
-    }
-
-    @Override
-    public int getWidth() {
-        return WIDTH;
     }
 
 

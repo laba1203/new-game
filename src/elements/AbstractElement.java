@@ -1,6 +1,7 @@
 package elements;
 
 import game.Game;
+import main.Constants;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -8,7 +9,12 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
 
-abstract class AbstractElement {
+import static main.Constants.BF_HEIGHT;
+import static main.Constants.BF_WIDTH;
+
+abstract class AbstractElement implements GUIElement{
+    int x;
+    int y;
     private Sprite sprite;
     private static boolean gameRendering = false;
     private Game game;
@@ -63,6 +69,67 @@ abstract class AbstractElement {
         }finally {
             gameRendering = false;
         }
+    }
+
+    public void move(Constants.Direction direction, int timeout){
+        int x = getXCoord();
+        int y = getYCoord();
+        if(this.destroyed()){
+            System.out.println("Your object was destroyed.");
+            return;
+        }
+        switch (direction){
+            default:
+                return;
+            case NONE:
+                //do nothing;
+                return;
+            case LEFT:
+                if(x <= 0){
+                    return;
+                }
+                setX(x-1);
+                break;
+            case RIGHT:
+                if(x > BF_WIDTH - this.getWidth()){
+                    return;
+                }
+                setX(x+1);
+                break;
+            case UP:
+                if(y <= 0){
+                    return;
+                }
+                setY(y-1);
+                break;
+            case DOWN:
+                if(y > BF_HEIGHT - getHeight()){
+                    return;
+                }
+                setY(y+1);
+                break;
+        }
+        sleep(timeout);
+    }
+
+    @Override
+    public int getXCoord() {
+        return x;
+    }
+
+    @Override
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    @Override
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    @Override
+    public int getYCoord() {
+        return y;
     }
 
 

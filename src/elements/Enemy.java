@@ -12,8 +12,6 @@ public class Enemy extends AbstractElement implements Runnable, GUIElement{
 
     public static final int WIDTH = 32;
     private static final int HEIGHT = 40;
-    private int x;
-    private int y;
     private long startDelay = 0; //sleep before start
 
     private boolean alive = false;
@@ -28,33 +26,25 @@ public class Enemy extends AbstractElement implements Runnable, GUIElement{
         this.x = x;
         this.y = y;
         this.startDelay = timeout;
-        move(DOWN);
+        this.alive = true;
+        new Thread(this).start();
     }
 
     @Override
     public void run() {
         sleep(startDelay);
         while (alive){
-            flyDown();
-            sleep(20);
+            if(getYCoord() > BF_HEIGHT){
+                this.alive = false;
+            }
+            move(DOWN);
+            destroySpaceIfHit();
         }
     }
 
     @Override
     public void move(Constants.Direction direction) {
-        if(direction!= DOWN){
-            System.out.println("Incorrect direction for the Enemy." + direction);
-        }
-        this.alive = true;
-        new Thread(this).start();
-    }
-
-    private void flyDown(){
-        if(y > BF_HEIGHT){
-            this.alive = false;
-        }
-        y++;
-        destroySpaceIfHit();
+        super.move(DOWN, 20);
     }
 
     @Override
@@ -63,16 +53,6 @@ public class Enemy extends AbstractElement implements Runnable, GUIElement{
 //        sprite.draw(g, x, y);
         g.setColor(new Color(255, 180, 53));
         g.fillRect(x, y, WIDTH, HEIGHT);
-    }
-
-    @Override
-    public int getXCoord() {
-        return x;
-    }
-
-    @Override
-    public int getYCoord() {
-        return y;
     }
 
     @Override
