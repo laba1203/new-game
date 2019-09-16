@@ -120,15 +120,6 @@ public class Game extends Canvas implements Runnable{
             System.out.println("Add Enemy with timeout: " + timeout);
             addUiElement(new Enemy(this, x, y, timeout));
             timeout += (2000 + rand.nextInt(4000));
-//            Random rand = new Random();
-//            int x = rand.nextInt(BF_WIDTH - Enemy.WIDTH);
-//            System.out.println("Add Enemy with timeout: " + timeout);
-//            addUiElement(new Enemy(this, x, y, timeout));
-//            if(timeout < minTimeout){
-//                minTimeout = initialTimeout;
-//                timeout = initialTimeout;
-//            }
-//            timeout = timeout - 2000;
         }
         System.out.println("Enemies were generated.");
     }

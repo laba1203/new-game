@@ -108,6 +108,20 @@ abstract class AbstractElement implements GUIElement{
                 }
                 setY(y+1);
                 break;
+            case DIAGONAL_DOWN_LEFT:
+                if(x < 0 || y > BF_HEIGHT){
+                    return;
+                }
+                setY(y+1);
+                setX(x-1);
+                break;
+            case DIAGONAL_DOWN_RIGHT:
+                if(x > BF_WIDTH - getWidth() || y > BF_HEIGHT){
+                    return;
+                }
+                setY(y+1);
+                setX(x+1);
+                break;
         }
         sleep(timeout);
     }

@@ -6,7 +6,8 @@ import main.Constants;
 import java.awt.*;
 
 import static main.Constants.BF_HEIGHT;
-import static main.Constants.Direction.DOWN;
+import static main.Constants.BF_WIDTH;
+import static main.Constants.Direction.*;
 
 public class Enemy extends AbstractElement implements Runnable, GUIElement{
 
@@ -38,13 +39,22 @@ public class Enemy extends AbstractElement implements Runnable, GUIElement{
                 this.alive = false;
             }
             move(DOWN);
+            //TODO
+//            if(getXCoord() <= BF_WIDTH - getXCoord() - 10){
+//                move(DIAGONAL_DOWN_RIGHT);
+//            }
+//            if(getXCoord() <= 10) {
+//                move(DIAGONAL_DOWN_LEFT);
+//            }
+
+
             destroySpaceIfHit();
         }
     }
 
     @Override
     public void move(Constants.Direction direction) {
-        super.move(DOWN, 20);
+        super.move(direction, 20);
     }
 
     @Override
