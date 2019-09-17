@@ -4,6 +4,7 @@ import game.Game;
 import main.Constants;
 
 import java.awt.*;
+import java.util.Random;
 
 import static main.Constants.BF_HEIGHT;
 import static main.Constants.BF_WIDTH;
@@ -54,7 +55,13 @@ public class Enemy extends AbstractElement implements Runnable, GUIElement{
     }
 
     private void moveZigzagWhileAlive(){
+        //choose first dirrection randomlly
+        Random rand = new Random();
         Constants.Direction direction = DIAGONAL_DOWN_RIGHT;
+        if(rand.nextInt(10) > 5){
+            direction = DIAGONAL_DOWN_LEFT;
+        }
+
         while (alive){
             move(direction);
             if(direction == DIAGONAL_DOWN_RIGHT && (getXCoord() >= BF_WIDTH - getWidth())){

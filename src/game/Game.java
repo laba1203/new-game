@@ -119,6 +119,7 @@ public class Game extends Canvas implements Runnable{
             int x = rand.nextInt(BF_WIDTH - Enemy.WIDTH);
             System.out.println("Add Enemy with timeout: " + timeout);
 //            addUiElement(new Enemy(this, x, y, timeout));
+
             addUiElement(new Enemy(this, x, y, timeout, true));
             timeout += (2000 + rand.nextInt(4000));
         }
