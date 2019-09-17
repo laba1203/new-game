@@ -72,7 +72,7 @@ public class Enemy extends AbstractElement implements Runnable, GUIElement{
 
     @Override
     public void move(Constants.Direction direction) {
-        super.move(direction, 20);
+        super.move(direction, 15);
     }
 
     @Override
