@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.Random;
 
+import static main.Constants.BF_HEIGHT;
 import static main.Constants.BF_WIDTH;
 import static main.Constants.Direction.*;
 
@@ -41,28 +42,41 @@ public class Game extends Canvas implements Runnable{
             }catch (ConcurrentModificationException e){
                 render();
             }
-            if(spaceship.destroyed()){
-                System.out.println("<<<<<======------     YOU LOSE  :-(     ------======>>>>>>>>");
-                running = false;
+            try {
+                if (spaceship.destroyed() || enemyWin()) {
+                    System.out.println("<<<<<======------     YOU LOSE  :-(     ------======>>>>>>>>");
+                    running = false;
+                }
+                if (allEnemiesKilled()) {
+                    System.out.println("<<<<<======------     CONGRATULATIONS!!!! YOU WIN !!!!!      ------======>>>>>>>>");
+                    running = false;
+                }
+            }catch (ConcurrentModificationException e){
+                e.printStackTrace();
             }
-            if(allEnemiesKilled()){
-                System.out.println("<<<<<======------     CONGRATULATIONS!!!! YOU WIN !!!!!      ------======>>>>>>>>");
-                running = false;
-            };
         }
 
         System.out.println("<<<<-----  Game Over  ------>>>>>>");
     }
 
-    private boolean allEnemiesKilled(){
-        for(GUIElement element: getGuiElements())
-        if(element instanceof Enemy){
-            if(!element.destroyed()){
-                return false;
+    private boolean allEnemiesKilled() {
+        for (GUIElement element : getGuiElements()) {
+            if (element instanceof Enemy) {
+                if (!element.destroyed()) {
+                    return false;
+                }
             }
         }
         return true;
+    }
 
+    private boolean enemyWin(){
+        for (GUIElement element : getGuiElements()) {
+            if (element.getYCoord() > BF_HEIGHT) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public ArrayList<GUIElement> getGuiElements(){
