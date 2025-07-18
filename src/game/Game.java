@@ -173,7 +173,6 @@ public class Game extends Canvas implements Runnable{
                     || e.getKeyCode() == KeyEvent.VK_RIGHT
                     || e.getKeyCode() == KeyEvent.VK_UP
                     || e.getKeyCode() == KeyEvent.VK_DOWN
-                    || e.getKeyCode() == KeyEvent.VK_SPACE
                     ) {
                 direction = NONE;
             }
